@@ -4,7 +4,8 @@
   "description": "Node.js Demo for JWT Authentication",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon server.js"
   },
   "keywords": [
     "node.js",
@@ -18,9 +19,18 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mime-types": "^2.1.35",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^2.1.0",
+    "path": "^0.12.7",
     "sequelize": "^5.21.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
