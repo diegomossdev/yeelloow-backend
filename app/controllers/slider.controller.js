@@ -5,6 +5,15 @@ const Slider = db.sliders;
 
 const dir = path.resolve();
 
+const findAllSliders = async (req, res) => {
+  try {
+    const sliders = await Slider.findAll();
+    return res.status(200).send({ status: 200, data: sliders });
+  } catch (error) {
+    return res.status(500).send({ status: 500, message: error.message });
+  }
+};
+
 const uploadSlider = async (req, res) => {
   try {
     if (req.file == undefined) {
@@ -79,6 +88,7 @@ const deleteSlider = async (req, res) => {
 };
 
 module.exports = {
+  findAllSliders,
   uploadSlider,
   deleteSlider,
 };

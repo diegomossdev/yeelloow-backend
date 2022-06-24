@@ -29,6 +29,8 @@ module.exports = (app) => {
     next();
   });
 
+  app.get('/api/sliders', controller.findAllSliders);
+
   app.post(
     '/api/slider',
     [authJwt.verifyToken, authJwt.isAdmin, upload.single('file')],
