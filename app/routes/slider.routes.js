@@ -34,4 +34,10 @@ module.exports = (app) => {
     [authJwt.verifyToken, authJwt.isAdmin, upload.single('file')],
     controller.uploadSlider
   );
+
+  app.delete(
+    '/api/slider/:sliderId',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.deleteSlider
+  );
 };
