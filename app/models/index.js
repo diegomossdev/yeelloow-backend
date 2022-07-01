@@ -24,6 +24,8 @@ db.role = require('../models/role.model.js')(sequelize, Sequelize);
 db.post = require('../models/post.model.js')(sequelize, Sequelize);
 db.images = require('../models/image.model.js')(sequelize, Sequelize);
 db.sliders = require('../models/slider.model.js')(sequelize, Sequelize);
+db.category = require('../models/category.model.js')(sequelize, Sequelize);
+db.item = require('../models/item.model.js')(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: 'user_roles',
@@ -34,6 +36,12 @@ db.user.belongsToMany(db.role, {
   through: 'user_roles',
   foreignKey: 'userId',
   otherKey: 'roleId',
+});
+
+db.category.hasMany(db.item, { foreignKey: 'categoryId' });
+
+db.item.belongsTo(db.category, {
+  foreignKey: 'categoryId',
 });
 
 db.ROLES = ['user', 'admin', 'moderator'];

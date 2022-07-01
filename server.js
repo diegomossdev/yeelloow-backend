@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 
@@ -25,10 +24,10 @@ const db = require('./app/models');
 const Role = db.role;
 
 // db.sequelize.sync();
-db.sequelize.sync({ force: true }).then(() => {
-  console.log('Drop and Resync Db');
-  initial();
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log('Drop and Resync Db');
+//   initial();
+// });
 
 function initial() {
   Role.create({
@@ -58,6 +57,8 @@ require('./app/routes/user.routes')(app);
 require('./app/routes/post.routes')(app);
 require('./app/routes/upload.routes')(app);
 require('./app/routes/slider.routes')(app);
+require('./app/routes/category.routes')(app);
+require('./app/routes/item.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
