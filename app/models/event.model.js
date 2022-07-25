@@ -1,28 +1,26 @@
 module.exports = (sequelize, Sequelize) => {
-  const Slider = sequelize.define('slider', {
+  const Event = sequelize.define('event', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    type: {
+    title: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
-    originalname: {
+    subtitle: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
-    filename: {
+    description: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
-    path: {
-      type: Sequelize.STRING,
-    },
-    link: {
-      type: Sequelize.STRING,
-    },
-    size: {
+    coverimg: {
       type: Sequelize.STRING,
     },
   });
-  return Slider;
+
+  return Event;
 };

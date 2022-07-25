@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "@Admin123",
+    "database": "dbproject",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "@Admin123",
+    "database": "dbproject",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "@Admin123",
+    "database": "dbproject",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}

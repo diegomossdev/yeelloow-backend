@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Slider = sequelize.define('slider', {
+  const Companyimage = sequelize.define('companyimage', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -17,12 +17,9 @@ module.exports = (sequelize, Sequelize) => {
     path: {
       type: Sequelize.STRING,
     },
-    link: {
-      type: Sequelize.STRING,
-    },
     size: {
       type: Sequelize.STRING,
     },
   });
-  return Slider;
+  return Companyimage;
 };

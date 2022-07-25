@@ -21,31 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // database
-const db = require('./app/models');
-const Role = db.role;
+// const db = require('./app/models');
 
 // db.sequelize.sync();
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log('Drop and Resync Db');
-//   initial();
 // });
-
-function initial() {
-  Role.create({
-    id: 1,
-    name: 'user',
-  });
-
-  Role.create({
-    id: 2,
-    name: 'moderator',
-  });
-
-  Role.create({
-    id: 3,
-    name: 'admin',
-  });
-}
 
 // simple route
 app.get('/', (req, res) => {
@@ -60,6 +41,12 @@ require('./app/routes/upload.routes')(app);
 require('./app/routes/slider.routes')(app);
 require('./app/routes/category.routes')(app);
 require('./app/routes/item.routes')(app);
+require('./app/routes/event.routes')(app);
+require('./app/routes/page.routes')(app);
+require('./app/routes/textandimage.routes')(app);
+require('./app/routes/information.routes')(app);
+require('./app/routes/testimonial.routes')(app);
+require('./app/routes/companyimage.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;

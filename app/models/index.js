@@ -26,6 +26,16 @@ db.images = require('../models/image.model.js')(sequelize, Sequelize);
 db.sliders = require('../models/slider.model.js')(sequelize, Sequelize);
 db.category = require('../models/category.model.js')(sequelize, Sequelize);
 db.item = require('../models/item.model.js')(sequelize, Sequelize);
+db.event = require('../models/event.model.js')(sequelize, Sequelize);
+db.photo = require('../models/photo.model')(sequelize, Sequelize);
+db.page = require('../models/page.model.js')(sequelize, Sequelize);
+db.textandimage = require('../models/textandimage.model.js')(
+  sequelize,
+  Sequelize
+);
+db.informations = require('../models/information.model')(sequelize, Sequelize);
+db.testimonial = require('../models/testimonial.model')(sequelize, Sequelize);
+db.companyimage = require('../models/companyimage.model')(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: 'user_roles',
@@ -39,9 +49,14 @@ db.user.belongsToMany(db.role, {
 });
 
 db.category.hasMany(db.item, { foreignKey: 'categoryId' });
-
 db.item.belongsTo(db.category, {
   foreignKey: 'categoryId',
+});
+
+db.event.hasMany(db.photo, { foreignKey: 'eventId', onDelete: 'CASCADE' });
+db.photo.belongsTo(db.event, {
+  foreignKey: 'eventId',
+  onDelete: 'CASCADE',
 });
 
 db.ROLES = ['user', 'admin', 'moderator'];
