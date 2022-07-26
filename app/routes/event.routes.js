@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage, limits: { fileSize: 2000000000000000 } });
 
 module.exports = (app) => {
   app.use(function (req, res, next) {
@@ -43,6 +43,18 @@ module.exports = (app) => {
     '/api/event/:id',
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.updateEvent
+  );
+
+  app.put(
+    '/api/event/cover-img/:id',
+    [authJwt.verifyToken, authJwt.isAdmin, upload.single('file')],
+    controller.updateCoverImg
+  );
+
+  app.post(
+    '/api/event/add-images/:id',
+    [authJwt.verifyToken, authJwt.isAdmin, upload.array('files', 10)],
+    controller.updateImages
   );
 
   app.delete(

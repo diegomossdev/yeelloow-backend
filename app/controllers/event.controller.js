@@ -40,13 +40,11 @@ const updateEvent = async (req, res) => {
         subtitle: req.body.subtitle,
         description: req.body.description,
       });
-      return res
-        .status(200)
-        .send({
-          status: 200,
-          message: 'Evento alterado com sucesso.',
-          data: event,
-        });
+      return res.status(200).send({
+        status: 200,
+        message: 'Evento alterado com sucesso.',
+        data: event,
+      });
     } catch (error) {
       return res
         .status(500)
@@ -54,6 +52,84 @@ const updateEvent = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).send({ message: error.message });
+  }
+};
+
+const updateCoverImg = async (req, res) => {
+  const exists = await Event.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: Photo,
+  });
+
+  if (!exists) {
+    return res.status(400).send({
+      status: 400,
+      message: 'Não existe um evento com esse id.',
+    });
+  }
+
+  const cover = await exists.update({
+    coverimg: req.file.path,
+  });
+
+  try {
+    return res.status(200).send({
+      status: 200,
+      message: 'Imagem alterada com sucesso!',
+      data: {
+        coverimg: cover,
+      },
+    });
+  } catch (error) {
+    return res.status(400).send({
+      status: 500,
+      message: `Erro ao atualizar a imagem do evento: ${error}`,
+    });
+  }
+};
+
+const updateImages = async (req, res) => {
+  const exists = await Event.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: Photo,
+  });
+
+  if (!exists) {
+    return res.status(400).send({
+      status: 400,
+      message: 'Não existe um evento com esse id.',
+    });
+  }
+
+  const photos = [];
+  req.files.map((file) =>
+    photos.push({
+      type: file.mimetype,
+      originalname: file.originalname,
+      filename: file.filename,
+      path: file.path,
+      size: file.size,
+      eventId: req.params.id,
+    })
+  );
+
+  try {
+    Photo.bulkCreate(photos).then(() => {
+      return res.status(200).send({
+        status: 200,
+        message: 'Imagens cadastradas com sucesso!',
+        data: { ok: true },
+      });
+    });
+  } catch (error) {
+    return res.status(400).send({
+      status: 500,
+      message: `Erro ao atualizar a imagem do evento: ${error}`,
+    });
   }
 };
 
@@ -227,6 +303,8 @@ module.exports = {
   findAllEvents,
   addEvent,
   updateEvent,
+  updateCoverImg,
+  updateImages,
   findEventById,
   deleteEvent,
   deletePhotoEvent,
