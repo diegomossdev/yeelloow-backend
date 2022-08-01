@@ -61,15 +61,35 @@ const updateTextAndImages = async (req, res) => {
   }
 
   try {
-    const textandimage = await exists.update({
-      type: req.file.mimetype,
-      originalname: req.file.originalname,
-      filename: req.file.filename,
-      path: req.file.path,
-      size: req.file.size,
-      text: req.body.text,
-    });
-    return res.status(200).send({ status: 200, data: textandimage });
+    const file = {};
+    if (req.file) {
+      (file.type = req.file.mimetype),
+        (file.originalname = req.file.originalname),
+        (file.filename = req.file.filename),
+        (file.path = req.file.path),
+        (file.size = req.file.size);
+    } else {
+      (file.type = exists.type),
+        (file.originalname = exists.originalname),
+        (file.filename = exists.filename),
+        (file.path = exists.path),
+        (file.size = exists.size);
+    }
+    const textandimage = await exists.update(
+      {
+        ...file,
+        text: req.body.text ? req.body.text : exists.text,
+      },
+      { where: { id: req.params.id } }
+    );
+
+    return res
+      .status(200)
+      .send({
+        status: 200,
+        data: textandimage,
+        message: 'Texto e/ou imagem alterado com sucesso!',
+      });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }

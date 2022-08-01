@@ -16,6 +16,8 @@ module.exports = (app) => {
 
   app.get('/api/page-company/:id', controller.pageCompany);
 
+  app.get('/api/page-contact/:id', controller.pageContact);
+
   app.post(
     '/api/page',
     [authJwt.verifyToken, authJwt.isAdmin],

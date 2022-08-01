@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Event = db.event;
 const Photo = db.photo;
+const Information = db.informations;
 
 const dir = path.resolve();
 
@@ -13,7 +14,14 @@ const findAllEvents = async (req, res) => {
       limit: req.query?.limit ? Number(req.query.limit) : 999999,
     });
 
-    return res.status(200).send({ status: 200, data: events });
+    const infos = await Information.findAll();
+
+    const data = {
+      events,
+      informations: infos,
+    };
+
+    return res.status(200).send({ status: 200, data });
   } catch (error) {
     return res.status(500).send({ status: 500, message: error.message });
   }
@@ -210,8 +218,15 @@ const findEventById = async (req, res) => {
     });
   }
 
+  const infos = await Information.findAll();
+
+  const data = {
+    event: exists,
+    informations: infos,
+  };
+
   if (exists) {
-    return res.status(200).send({ status: 200, data: exists });
+    return res.status(200).send({ status: 200, data });
   }
 };
 

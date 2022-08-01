@@ -6,9 +6,12 @@ const app = express();
 var corsOptions = {
   origin: 'http://localhost:3000',
   origin: 'http://localhost:3001',
+  origin: 'http://localhost',
+  origin: 'http://0.0.0.0:3000',
+  origin: '0.0.0.0:3000',
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.static('public'));
 app.use('/images', express.static('images'));
@@ -50,7 +53,7 @@ require('./app/routes/testimonial.routes')(app);
 require('./app/routes/companyimage.routes')(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

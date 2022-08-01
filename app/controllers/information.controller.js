@@ -51,12 +51,40 @@ const updateInformation = async (req, res) => {
   }
 
   try {
-    const info = await Information.update({
-      key: req.body.key,
+    const info = await exists.update({
       value: req.body.value,
-      link: req.body.link,
     });
     return res.status(200).send({ status: 200, data: info });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+const updateLogoInformation = async (req, res) => {
+  const exists = await Information.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
+
+  if (!exists) {
+    return res.status(400).send({
+      status: 400,
+      message: 'Não existe um item com esse id.',
+    });
+  }
+
+  try {
+    const logo = await exists.update({
+      type: req.file.mimetype,
+      originalname: req.file.originalname,
+      filename: req.file.filename,
+      path: req.file.path,
+      size: req.file.size,
+    });
+    return res
+      .status(200)
+      .send({ status: 200, message: 'Logo alterado com sucesso', data: logo });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -92,5 +120,6 @@ module.exports = {
   findAllInformation,
   addInformation,
   updateInformation,
+  updateLogoInformation,
   deleteInformation,
 };
